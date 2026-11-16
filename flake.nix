@@ -62,8 +62,8 @@
         # skillspkgs / nur-packages' last-write-wins `//` merge; the
         # owner+topic name is resolvable and unique, mirroring git-skills's
         # `agent-skills-nhooey-git-all`. The aggregate carries the home-manager
-        # `isFlakeSkillsEnv` passthru itself (agent-skill-flake #47), so
-        # `default` is directly installable — no hand-rolled pack.
+        # `isFlakeSkillsEnv` passthru itself, so `default` is directly
+        # installable — no hand-rolled pack.
         name = "agent-skills-nhooey-python-all";
       };
     in
@@ -97,6 +97,11 @@
           packages = base.packages.${system};
 
           apps = base.apps.${system};
+
+          # Build every skill package and the aggregate under `nix flake
+          # check`, so a skill that fails to build fails the check rather
+          # than only `nix build`. `default` is the aggregate again.
+          checks = removeAttrs base.packages.${system} [ "default" ];
 
           # `nix fmt` runs nixfmt over `.nix` and prettier over `.md` / `.yaml`;
           # the module also surfaces a `checks.${system}.treefmt` so `nix flake

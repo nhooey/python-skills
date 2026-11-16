@@ -29,8 +29,6 @@ Package outputs:
 
 ## Development
 
-```bash
-nix develop      # enter the dev shell; run `menu` to list commands
-nix fmt          # nixfmt over *.nix, prettier over *.md / *.yaml
-nix flake check  # runs the treefmt check (fails on any unformatted file)
-```
+Run `nix develop` to enter the dev shell, then `menu` to list its commands:
+`check` builds every skill and fails on any unformatted file, `fmt` formats
+the tree, and `update-flake` updates the flake inputs.
