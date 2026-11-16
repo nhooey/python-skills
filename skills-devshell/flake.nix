@@ -5,15 +5,21 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default";
 
-    # The builder lib; it carries no skill inputs.
+    # The builder lib. agent-skill-flake carries zero skill inputs, so it does
+    # not drag the skill mesh into this sub-flake's lock — only the skill
+    # sources below do.
     agent-skill-flake = {
       url = "github:nhooey/agent-skill-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Skill sources, the same repos `github:nhooey/skillspkgs` aggregates.
-    # They follow `nixpkgs` but not `agent-skill-flake`, so each keeps its own
-    # compatible builder.
+    # They follow `nixpkgs` but not `agent-skill-flake`: forcing skillspkgs'
+    # `authoring` combination's transitive sources onto a single pinned
+    # builder surfaces an ownerless aggregate-key the strict namespace check
+    # rejects, so each source keeps its own (compatible) builder.
+    # `mkDevshellSkillsFlake` still runs from this flake's
+    # `agent-skill-flake.lib`, so the combiner is the pinned rev above.
     coding-agent-skills = {
       url = "github:nhooey/coding-agent-skills";
       inputs.nixpkgs.follows = "nixpkgs";
