@@ -98,6 +98,11 @@
 
           apps = base.apps.${system};
 
+          # Build every skill package and the aggregate under `nix flake
+          # check`, so a skill that fails to build fails the check rather
+          # than only `nix build`. `default` is the aggregate again.
+          checks = removeAttrs base.packages.${system} [ "default" ];
+
           # `nix fmt` runs nixfmt over `.nix` and prettier over `.md` / `.yaml`;
           # the module also surfaces a `checks.${system}.treefmt` so `nix flake
           # check` fails on any unformatted file. prettier's includes are pinned

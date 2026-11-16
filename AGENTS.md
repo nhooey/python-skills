@@ -5,5 +5,5 @@ Agent skills for writing Python, packaged as a Nix flake. Each skill is a direct
 ## Build and test
 
 - `nix develop`: the dev shell, with the project's skills installed into `.agents/skills/` from the `skills-devshell/` sub-flake; run `menu` to list its commands.
-- `nix flake check`: fails on any file `nix fmt` would change.
+- `nix flake check`: builds every skill package and the aggregate, and fails on any file `nix fmt` would change.
 - `nix fmt`: formats every file, nixfmt over `.nix` and prettier over Markdown and YAML.
