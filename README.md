@@ -30,5 +30,6 @@ Package outputs:
 ## Development
 
 Run `nix develop` to enter the dev shell, then `menu` to list its commands:
-`check` builds every skill and fails on any unformatted file, `fmt` formats
-the tree, and `update-flake` updates the flake inputs.
+`check` builds every skill, runs each skill's "Your preferences" line through
+a symlinked skill folder and fails on any unformatted file, `fmt` formats the
+tree, and `update-flake` updates the flake inputs.

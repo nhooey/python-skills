@@ -99,8 +99,15 @@
 
           # Build every skill package and the aggregate under `nix flake
           # check`, so a skill that fails to build fails the check rather
-          # than only `nix build`. `default` is the aggregate again.
-          checks = removeAttrs base.packages.${system} [ "default" ];
+          # than only `nix build`. `default` is the aggregate again. Then run
+          # each skill's "Your preferences" command line against a skill
+          # folder symlinked into a fake Nix store.
+          checks = removeAttrs base.packages.${system} [ "default" ] // {
+            preferences-section-test = pkgs.runCommand "preferences-section-test" { } ''
+              ${pkgs.bash}/bin/bash ${./checks/preferences-section-test.sh} ${./skills}
+              touch $out
+            '';
+          };
 
           # `nix fmt` runs nixfmt over `.nix` and prettier over `.md` / `.yaml`;
           # the module also surfaces a `checks.${system}.treefmt` so `nix flake
