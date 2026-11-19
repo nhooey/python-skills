@@ -4,9 +4,9 @@ Agent skills for writing Python, packaged as a Nix flake. Each skill is a direct
 
 ## Build and test
 
-Enter the dev shell with `nix develop`; it installs the project's skills into `.agents/skills/` from the `skills-devshell/` sub-flake, and `menu` lists its commands:
+Enter the dev shell with `nix develop`; it installs skillspkgs' `skill-collections` combination, with no additions, into `.agents/skills/` from the `skills-devshell/` sub-flake, and `menu` lists its commands:
 
-- `check`: builds every skill package and the aggregate, and fails on any file `fmt` would change.
+- `check`: builds every skill package and the aggregate, runs `checks/preferences-section-test.sh` on each skill's "Your preferences" line, and fails on any file `fmt` would change.
 - `fmt`: formats every file, nixfmt over `.nix` and prettier over Markdown and YAML.
 - `update-flake`: updates the flake inputs and rewrites `flake.lock`.
 - `update-skills-devshell`: bumps the `skills-devshell/` sub-flake's lock, the dev shell's skill set.

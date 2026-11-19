@@ -74,9 +74,8 @@
         # (motd, install-skills startup, the ci/dev/maintenance command trio,
         # and the reap-skills/update-skills-devshell pair). Configured via the
         # `agent-skill-flake.devshellSkills` options block below. The dev-shell
-        # skill set (the git/GitHub pack plus skillspkgs' `authoring`
-        # combination) is defined in the runtime `skills-devshell/` sub-flake
-        # and invoked at RUNTIME, never as a root input, so this repo keeps zero
+        # skill set is defined in the runtime `skills-devshell/` sub-flake and
+        # invoked at RUNTIME, never as a root input, so this repo keeps zero
         # skill inputs in its own lock.
         inputs.agent-skill-flake.flakeModules.devshellSkills
         inputs.treefmt-nix.flakeModule
@@ -100,8 +99,15 @@
 
           # Build every skill package and the aggregate under `nix flake
           # check`, so a skill that fails to build fails the check rather
-          # than only `nix build`. `default` is the aggregate again.
-          checks = removeAttrs base.packages.${system} [ "default" ];
+          # than only `nix build`. `default` is the aggregate again. Then run
+          # each skill's "Your preferences" command line against a skill
+          # folder symlinked into a fake Nix store.
+          checks = removeAttrs base.packages.${system} [ "default" ] // {
+            preferences-section-test = pkgs.runCommand "preferences-section-test" { } ''
+              ${pkgs.bash}/bin/bash ${./checks/preferences-section-test.sh} ${./skills}
+              touch $out
+            '';
+          };
 
           # `nix fmt` runs nixfmt over `.nix` and prettier over `.md` / `.yaml`;
           # the module also surfaces a `checks.${system}.treefmt` so `nix flake
