@@ -1,6 +1,6 @@
 ---
 name: python-hygiene-functional-style
-description: Write Python in pure functional style. Pure functions in a functional core, side effects only in a thin shell at the edges, immutable data, nothing changed in place, expressions over statements, composition and pipelines over loops that accumulate, errors returned as values inside the core, and no recursion Python can't afford. The user's preferences pick a tier of libraries: the standard library alone, then toolz added, then pyrsistent added; the skill says what each tier uses and what it rules out. Use when writing, rewriting or reviewing Python code, scripts or tests, including a skill's bundled scripts, which stay on the standard-library tier.
+description: "Write Python in pure functional style. Pure functions in a functional core, side effects only in a thin shell at the edges, immutable data, nothing changed in place, expressions over statements, composition and pipelines over loops that accumulate, errors returned as values inside the core, and no recursion Python can't afford. The user's preferences pick a tier of libraries: the standard library alone, then toolz added, then pyrsistent added; the skill says what each tier uses and what it rules out. Use when writing, rewriting or reviewing Python code, scripts or tests, including a skill's bundled scripts, which stay on the standard-library tier."
 ---
 
 # Pure functional Python
